@@ -14,6 +14,10 @@ if (($ARGV[0] eq "") || ($ARGV[1] eq "")) {
 
 $op = shift;
 
+foreach $i (0 .. $#ARGV) {
+    print "Argument ", $i, " = ==>", $ARGV[$i], "<==\n";
+}
+
 print "Applying '$op' to\n";
 print "@ARGV\n";
 
