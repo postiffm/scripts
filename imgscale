@@ -1,0 +1,50 @@
+#!/usr/bin/perl
+
+# Usage: imgscale w h wr hr
+# w = starting image width
+# h = starting image height
+# wr:hr = desired ratio of final scaled size
+# Use case: You want to take an image, say of 939 x 627 pixels,
+# and scale it to exactly wr:wh ratio.
+#
+# Example:
+# $ ./imgscale 939 627 6 4
+# Starting with 'even' w:h = 936:624
+# This ratio works perfectly: 936 wide by 624 high
+#
+# $ ./imgscale 939 623 6 4
+# Starting with 'even' w:h = 936:620
+# This ratio works perfectly: 930 wide by 620 high
+#
+# $ ./imgscale 939 627 3 2
+# Starting with 'even' w:h = 939:626
+# This ratio works perfectly: 939 wide by 626 high
+
+my $w = shift(@ARGV);
+my $h = shift(@ARGV);
+my $wr = shift(@ARGV);
+my $hr = shift(@ARGV);
+$done = 0;
+
+# First, get $w to be perfectly divisible by $wr
+while ($w % $wr != 0) {
+    $w = $w-1;
+}
+
+# And get $h to be perfectly divisible by $hr
+while ($h % $hr != 0) {
+    $h = $h-1;
+}
+
+print "Starting with 'even' w:h = $w:$h\n";
+
+while (($done == 0) && ($w >= 0)) {
+    # Check if the ratio works out perfectly; if so, stop
+    if ($w * $hr == $h * $wr) {
+	print "This ratio works perfectly: $w wide by $h high\n";
+	$done = 1;
+    }
+    else {
+	$w = $w - $wr;
+    }
+}
