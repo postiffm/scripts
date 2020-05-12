@@ -1,9 +1,9 @@
 #!/usr/bin/perl -s
+use strict;
+use warnings;
 
-#!/bin/csh -f
-#!/usr/bin/perl -s
-#eval 'exec perl -s -x -S $0 $*:q'
-# if 0;
+# -l automatically chomps the input record, and sets R\ equal to $/.
+# I was having problems with ^M (CR) characters showing up randomly
 
 # Do some perl operation on a bunch of files, editing those files in place.
 
@@ -12,8 +12,8 @@ if (($ARGV[0] eq "") || ($ARGV[1] eq "")) {
     exit(1);
 }
 
-$op = shift;
-
+my $op = shift;
+my $i = 0;
 foreach $i (0 .. $#ARGV) {
     print "Argument ", $i, " = ==>", $ARGV[$i], "<==\n";
 }
@@ -22,8 +22,8 @@ print "Applying '$op' to\n";
 print "@ARGV\n";
 
 foreach $i (0 .. $#ARGV) {
-    $filename = $ARGV[$i];
-    $filenamebak = $filename . ".bak";
+    my $filename = $ARGV[$i];
+    my $filenamebak = $filename . ".bak";
     if (-d $filename) {
       print "Cannot process directory $filename\n";
       next;
