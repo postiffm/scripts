@@ -1,0 +1,11 @@
+#!/usr/bin/perl
+
+while ($_ = <>) {
+  # One way to do it:
+  #chomp($_);
+  #if ($_ =~ /(^\\rq\s+\(.*\)\s*)$/) {
+  #  print $1, " \\rq*\n";
+  #}
+    s/(^\\rq\s+\(.*\))$/$1 \\rq*/g;
+  print $_;
+}

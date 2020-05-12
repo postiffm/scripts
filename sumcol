@@ -1,0 +1,27 @@
+#!/usr/bin/perl -s
+
+# Sum the numbers that occur in column N of the standard input.
+# (C) 2018 Matt Postiff
+# Usage:
+# ls -l | ~/scripts/sumcol 5
+# will add up teh size of all the files listed.
+
+$numitems = 0;
+$hexmode = 0;
+if ($ARGV[0] eq "--hex") { $hexmode=1; shift(@ARGV); }
+$col = shift(@ARGV) - 1;
+while ($ln = <STDIN>) {
+  #print $ln;
+  @parts = split(/\s+/, $ln);
+  #print join(':', @parts);
+  next if (/^\s+$/);
+  s/^\s+//;
+  split /\s+/;
+  print "Adding ", $parts[$col], "\n";
+  # hexmode only works if there is no 0x prepended!
+  if ($hexmode) { $sum += hex($parts[$col]); }
+  else { $sum += $parts[$col]; }
+  $numitems++;
+}
+print "Sum: $sum\n";
+print "Average: $sum / $numitems = ", $sum / $numitems, "\n";
