@@ -1,0 +1,11 @@
+#!/bin/csh -f
+#!/usr/bin/perl
+eval 'exec perl -x -S $0 $*:q'
+ if 0;
+$col = $ARGV[0] - 1;
+while (<STDIN>) {
+  next if (/^\s+$/);
+  s/^\s+//;
+  split /\s+/;
+  print $_[$col], "\n"; 
+}

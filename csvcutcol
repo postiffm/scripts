@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+# Usage: Example of finding if there are duplicate column entries in a CSV file
+# ~/scripts/csvcutcol 2 < MyChannels11.csv | sort | wc -l
+# <returns X lines>
+# ~/scripts/csvcutcol 2 < MyChannels11.csv | sort | uniq | wc -l
+# <if returns same X lines, then there were no duplicates>
+
+$col = $ARGV[0] - 1;
+while ($ln = <STDIN>) {
+  next if ($ln =~ /^\s+$/);
+  $ln =~ s/^\s+//;
+  @words = split /,/,$ln;
+  print $words[$col], "\n"; 
+}
