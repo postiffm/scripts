@@ -4,6 +4,7 @@ use warnings;
 
 # -l automatically chomps the input record, and sets R\ equal to $/.
 # I was having problems with ^M (CR) characters showing up randomly
+# 10/17/2020 I still have not solved this problem entirely.
 
 # Do some perl operation on a bunch of files, editing those files in place.
 
@@ -32,19 +33,19 @@ foreach $i (0 .. $#ARGV) {
     # rename the file to .bak
     if (!rename ($filename, $filenamebak)) {
 	die "Cannot backup $filename : $!";
-	exit(1);
     }
 
+    my $fin, my $fout;
     # open the new .bak file for input
-    if (!open(INPUT, $filenamebak)) {
+    if (!open($fin, "<:raw", $filenamebak)) {
 	die "Cannot open $filenamebak : $!";
     }
     # and prepare to write modified contents to the original filename
-    open(OUTPUT, "> $filename");
+    open($fout, ">:raw", $filename);
 
-    # do the write
-    while (<INPUT>) {
+    # do the replace and write line by line
+    while (<$fin>) {
 	eval $op;
-	print OUTPUT $_;
+	print $fout $_;
     }
 }
